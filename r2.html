@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repartido de Ley de Faraday-Lenz - 3° Bachillerato</title>
+    <style>
+        /* === ESTILOS === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background: #f5f5f5;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .repartido {
+            max-width: 1100px;
+            width: 100%;
+            background: white;
+            padding: 40px 45px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 3px double #222;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .header h2 {
+            font-size: 18px;
+            font-weight: normal;
+            margin-top: 5px;
+            color: #333;
+        }
+
+        .header .datos {
+            margin-top: 10px;
+            font-size: 15px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header .datos span {
+            background: #eee;
+            padding: 3px 12px;
+            border-radius: 20px;
+        }
+
+        .instrucciones {
+            background: #f9f9f9;
+            border-left: 5px solid #222;
+            padding: 12px 18px;
+            margin-bottom: 30px;
+            font-size: 15px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .instrucciones strong {
+            font-weight: bold;
+        }
+
+        .bloque {
+            margin-top: 35px;
+            page-break-inside: avoid;
+        }
+
+        .bloque h3 {
+            background: #222;
+            color: white;
+            padding: 8px 18px;
+            font-size: 19px;
+            border-radius: 30px 30px 30px 0;
+            margin-bottom: 20px;
+            display: inline-block;
+            letter-spacing: 0.5px;
+        }
+
+        .bloque .subtitulo {
+            font-weight: bold;
+            font-size: 16px;
+            margin: 5px 0 15px 0;
+            color: #444;
+            border-bottom: 1px dashed #aaa;
+            padding-bottom: 5px;
+        }
+
+        .ejercicio {
+            margin-bottom: 28px;
+            padding-bottom: 12px;
+            border-bottom: 1px dotted #ccc;
+            page-break-inside: avoid;
+        }
+
+        .ejercicio .enunciado {
+            font-size: 15.5px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        .ejercicio .enunciado strong {
+            font-weight: bold;
+            color: #000;
+        }
+
+        .ejercicio .tag {
+            display: inline-block;
+            background: #e0e0e0;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 0 10px;
+            border-radius: 12px;
+            margin-right: 6px;
+            color: #222;
+        }
+
+        .ejercicio .espacio {
+            margin-top: 12px;
+            min-height: 60px;
+            border-bottom: 1px dashed #bbb;
+            background: #fafafa;
+            border-radius: 4px;
+            padding: 8px;
+        }
+
+        .ejercicio .espacio::before {
+            content: "✎ Resolución:";
+            font-size: 13px;
+            color: #777;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .formula {
+            background: #f0f4f8;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            display: inline-block;
+            margin: 3px 0;
+            border: 1px solid #d0d7dd;
+        }
+
+        .formula-block {
+            background: #f0f4f8;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            margin: 6px 0;
+            border: 1px solid #d0d7dd;
+            text-align: center;
+        }
+
+        .tabla-fórmulas, .tabla-respuestas {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0;
+            font-size: 14px;
+        }
+
+        .tabla-fórmulas th, .tabla-fórmulas td,
+        .tabla-respuestas th, .tabla-respuestas td {
+            border: 1px solid #333;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .tabla-fórmulas th {
+            background: #222;
+            color: white;
+        }
+
+        .tabla-respuestas th {
+            background: #444;
+            color: white;
+        }
+
+        .tabla-respuestas td {
+            font-size: 13px;
+        }
+
+        .tabla-respuestas .num {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+            .repartido {
+                box-shadow: none;
+                padding: 30px 35px;
+                border-radius: 0;
+            }
+            .ejercicio {
+                page-break-inside: avoid;
+            }
+            .header .datos span {
+                background: #ddd;
+            }
+            .instrucciones {
+                background: #f3f3f3;
+                border-left-color: #000;
+            }
+            .bloque h3 {
+                background: #000 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .tabla-fórmulas th, .tabla-respuestas th {
+                background: #000 !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .ejercicio .espacio {
+                min-height: 80px;
+                background: #f9f9f9;
+                border-bottom: 1px dashed #888;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .repartido {
+                padding: 20px 15px;
+            }
+            .header h1 {
+                font-size: 22px;
+            }
+            .header .datos {
+                flex-direction: column;
+                align-items: center;
+            }
+            .bloque h3 {
+                font-size: 17px;
+                padding: 6px 14px;
+            }
+            .ejercicio .enunciado {
+                font-size: 14.5px;
+            }
+            .tabla-fórmulas, .tabla-respuestas {
+                font-size: 12px;
+            }
+            .tabla-fórmulas th, .tabla-fórmulas td,
+            .tabla-respuestas th, .tabla-respuestas td {
+                padding: 5px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="repartido">
+
+    <!-- ============ ENCABEZADO ============ -->
+    <div class="header">
+        <h1>REPARTIDO N° 4 · LEY DE FARADAY–LENZ</h1>
+        <h2>Inducción electromagnética · Flujo · FEM · Transformadores</h2>
+        <div class="datos">
+            <span>📘 3° Bachillerato — Nivel Medio Superior</span>
+            <span>🧲 30 ejercicios · Dificultad progresiva</span>
+            <span>📅 2026</span>
+        </div>
+    </div>
+
+    <!-- ============ INSTRUCCIONES ============ -->
+    <div class="instrucciones">
+        <strong>📌 Instrucciones generales:</strong><br>
+        • Usa <strong>μ₀ = 4π × 10⁻⁷ T·m/A</strong> (para campos creados por corrientes).<br>
+        • Fórmulas clave: <strong>Φ = B A cos θ</strong> (flujo), <strong>ℰ = –N ΔΦ / Δt</strong> (FEM inducida), <strong>ℰ = B L v</strong> (barra móvil), <strong>ℰ = N B A ω senθ</strong> (espira giratoria, sin derivadas).<br>
+        • Para el <strong>sentido de la corriente inducida</strong>, aplica la <strong>Ley de Lenz</strong>: la corriente se opone a la variación del flujo que la produce.<br>
+        • Dibuja siempre el campo magnético y la normal a la superficie.
+    </div>
+
+    <!-- ================================================== -->
+    <!-- BLOQUE I – FLUJO MAGNÉTICO                        -->
+    <!-- ================================================== -->
+    <div class="bloque">
+        <h3>BLOQUE I · FLUJO MAGNÉTICO</h3>
+        <p class="subtitulo">Ejercicios 1 al 6 — Uso de <span class="formula">Φ = B A cos θ</span></p>
+
+        <!-- Ej 1 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">1</span> <strong>Básico.</strong> Una espira circular de radio <strong>0,1 m</strong> está en una región con <strong>B = 0,4 T</strong> perpendicular al plano de la espira. Calcula el flujo magnético a través de ella.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 2 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">2</span> <strong>Básico.</strong> Una superficie rectangular de <strong>0,2 m × 0,3 m</strong> está en un campo <strong>B = 0,5 T</strong>. El ángulo entre el campo y la normal a la superficie es <strong>60°</strong>. Calcula el flujo.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 3 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">3</span> <strong>Intermedio.</strong> Una espira cuadrada de lado <strong>0,15 m</strong> tiene su plano inclinado <strong>30°</strong> respecto a un campo <strong>B = 0,8 T</strong> (es decir, la normal forma 30° con <strong>B</strong>). Calcula el flujo.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 4 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">4</span> <strong>Intermedio.</strong> Un campo magnético uniforme de <strong>0,6 T</strong> atraviesa una espira circular de radio <strong>0,05 m</strong>. Si la espira gira de modo que la normal pasa de ser paralela a <strong>B</strong> a ser perpendicular, ¿cuál es la <strong>variación de flujo</strong> (ΔΦ)?
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 5 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">5</span> <strong>Intermedio–avanzado.</strong> Una bobina de <strong>200 espiras</strong> tiene un área de <strong>0,02 m²</strong>. El campo magnético varía de <strong>0,1 T</strong> a <strong>0,5 T</strong> en <strong>0,2 s</strong>, siempre perpendicular a las espiras. Calcula la variación del flujo <strong>por espira</strong> y la <strong>variación total</strong> (en la bobina).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 6 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">6</span> <strong>Avanzado.</strong> Una espira rectangular de <strong>0,1 m × 0,2 m</strong> está en un campo <strong>B = 0,3 T</strong>. La espira gira con velocidad angular constante de <strong>10 rad/s</strong>. Escribe la expresión del flujo en función del tiempo (usa <span class="formula">θ = ωt</span>) y calcula el flujo en <strong>t = 0,05 s</strong> (supón que en <em>t</em> = 0 la normal es paralela a <strong>B</strong>).
+            </div>
+            <div class="espacio"></div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- BLOQUE II – FEM INDUCIDA (LEY DE FARADAY)         -->
+    <!-- ================================================== -->
+    <div class="bloque">
+        <h3>BLOQUE II · FEM INDUCIDA POR VARIACIÓN DE FLUJO</h3>
+        <p class="subtitulo">Ejercicios 7 al 15 — Uso de <span class="formula">ℰ = –N ΔΦ / Δt</span></p>
+
+        <!-- Ej 7 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">7</span> <strong>Básico.</strong> Una espira única experimenta una variación de flujo de <strong>0,06 Wb</strong> en <strong>0,03 s</strong>. Calcula la FEM inducida (módulo).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 8 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">8</span> <strong>Básico.</strong> Una bobina de <strong>50 espiras</strong> tiene un flujo que varía de <strong>0,02 Wb</strong> a <strong>0,08 Wb</strong> en <strong>0,4 s</strong>. Calcula la FEM inducida.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 9 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">9</span> <strong>Intermedio.</strong> Un solenoide de <strong>1000 espiras</strong> y área <strong>0,005 m²</strong> está en un campo que varía linealmente de <strong>0</strong> a <strong>0,8 T</strong> en <strong>2 s</strong>, perpendicular a las espiras. Calcula la FEM inducida.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 10 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">10</span> <strong>Intermedio.</strong> Una espira cuadrada de lado <strong>0,1 m</strong> se coloca en un campo <strong>B = 0,5 T</strong> perpendicular a su plano. Si el campo se reduce a <strong>0,2 T</strong> en <strong>0,05 s</strong>, ¿cuál es la FEM inducida?
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 11 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">11</span> <strong>Intermedio.</strong> Una bobina de <strong>200 espiras</strong> y área <strong>0,01 m²</strong> está en un campo <strong>B = 0,3 T</strong>. La bobina gira <strong>90°</strong> en <strong>0,1 s</strong> (la normal pasa de paralela a perpendicular a <strong>B</strong>). Calcula la FEM inducida promedio.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 12 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">12</span> <strong>Intermedio–avanzado.</strong> Una bobina de <strong>500 espiras</strong> y área <strong>0,003 m²</strong> está inicialmente con su normal paralela a <strong>B = 0,4 T</strong>. En <strong>0,02 s</strong> se invierte completamente su orientación (la normal queda antiparalela). Calcula la FEM inducida. (Sugerencia: ΔΦ = Φ<sub>final</sub> – Φ<sub>inicial</sub>, con Φ<sub>inicial</sub> = B A y Φ<sub>final</sub> = –B A).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 13 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">13</span> <strong>Avanzado.</strong> Un campo magnético varía con el tiempo según <strong>B(t) = 0,2 + 0,5t</strong> (con <em>t</em> en segundos y <em>B</em> en teslas). Una espira de área <strong>0,04 m²</strong> tiene su normal paralela al campo. Calcula la FEM inducida en <strong>t = 1 s</strong> y en <strong>t = 3 s</strong>.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 14 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">14</span> <strong>Avanzado.</strong> Una bobina de <strong>300 espiras</strong> y radio <strong>0,02 m</strong> está en un campo que disminuye uniformemente de <strong>0,9 T</strong> a <strong>0,3 T</strong> en <strong>0,15 s</strong>. El campo es perpendicular a las espiras. Calcula: <br>
+                a) La FEM inducida. <br>
+                b) Si la resistencia de la bobina es <strong>5 Ω</strong>, ¿cuál es la corriente inducida?
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 15 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">15</span> <strong>Avanzado.</strong> Una espira rectangular de <strong>0,2 m × 0,3 m</strong> se mueve con velocidad constante <strong>2 m/s</strong> saliendo de una región con <strong>B = 0,5 T</strong> (perpendicular y entrante al plano). Si la espira tarda <strong>0,15 s</strong> en salir completamente, calcula la FEM inducida promedio durante ese intervalo. (Sugerencia: el área dentro del campo cambia).
+            </div>
+            <div class="espacio"></div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- BLOQUE III – LEY DE LENZ (SENTIDO DE LA CORRIENTE) -->
+    <!-- ================================================== -->
+    <div class="bloque">
+        <h3>BLOQUE III · LEY DE LENZ — SENTIDO DE LA CORRIENTE INDUCIDA</h3>
+        <p class="subtitulo">Ejercicios 16 al 20 — Aplicación cualitativa y cuantitativa</p>
+
+        <!-- Ej 16 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">16</span> <strong>Básico.</strong> Un imán se acerca a una espira con su polo norte apuntando hacia la espira. ¿La corriente inducida en la espira (vista desde el imán) circula en sentido horario o antihorario? Justifica usando la ley de Lenz.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 17 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">17</span> <strong>Básico.</strong> Una espira está en un campo <strong>B</strong> perpendicular y saliendo del plano. Si el campo <strong>aumenta</strong> en magnitud, ¿la corriente inducida circula en sentido horario o antihorario? Explica.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 18 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">18</span> <strong>Intermedio.</strong> Una barra conductora se desliza sobre rieles paralelos en presencia de un campo <strong>B</strong> entrante al plano. Si la barra se mueve hacia la derecha, ¿en qué sentido circula la corriente inducida en la espira formada por los rieles y la barra? Justifica.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 19 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">19</span> <strong>Intermedio.</strong> Una bobina está conectada a un galvanómetro. Un imán se introduce por un extremo y luego se saca. Describe cómo se deflecta la aguja del galvanómetro en cada caso (entra y sale), suponiendo que la bobina está fija.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 20 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">20</span> <strong>Avanzado.</strong> Una espira circular está en un campo <strong>B</strong> uniforme perpendicular a su plano. El campo disminuye linealmente con el tiempo. Dibuja (o describe) el sentido de la corriente inducida y explica qué ocurre con el flujo magnético propio que genera esa corriente.
+            </div>
+            <div class="espacio"></div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- BLOQUE IV – FEM POR MOVIMIENTO (BARRA MÓVIL)      -->
+    <!-- ================================================== -->
+    <div class="bloque">
+        <h3>BLOQUE IV · FEM POR MOVIMIENTO (BARRA DESLIZANTE)</h3>
+        <p class="subtitulo">Ejercicios 21 al 25 — Uso de <span class="formula">ℰ = B L v</span></p>
+
+        <!-- Ej 21 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">21</span> <strong>Básico.</strong> Una barra de <strong>0,5 m</strong> se mueve a <strong>4 m/s</strong> perpendicularmente a un campo <strong>B = 0,3 T</strong>. Calcula la FEM inducida entre sus extremos.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 22 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">22</span> <strong>Básico.</strong> Un conductor rectilíneo de <strong>0,8 m</strong> se desplaza con velocidad <strong>5 m/s</strong> formando <strong>30°</strong> con un campo <strong>B = 0,6 T</strong>. Calcula la FEM inducida (usa <span class="formula">ℰ = B L v senθ</span>).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 23 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">23</span> <strong>Intermedio.</strong> Una barra de <strong>0,3 m</strong> se desliza sobre rieles con velocidad <strong>2 m/s</strong> en un campo <strong>B = 0,7 T</strong> perpendicular al plano. Si la resistencia del circuito es <strong>4 Ω</strong>, calcula: <br>
+                a) La FEM inducida. <br>
+                b) La corriente inducida.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 24 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">24</span> <strong>Intermedio–avanzado.</strong> Una barra de <strong>0,6 m</strong> se mueve a <strong>3 m/s</strong> en un campo <strong>B = 0,5 T</strong>. La barra forma <strong>45°</strong> con su dirección de movimiento (y <strong>B</strong> es perpendicular al plano formado por la barra y la velocidad). Calcula la FEM. (Sugerencia: solo importa la componente de <strong>L</strong> perpendicular a <strong>v</strong>).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 25 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">25</span> <strong>Avanzado.</strong> Una barra de <strong>0,4 m</strong> cae verticalmente por la acción de la gravedad (sin rozamiento) dentro de un campo <strong>B = 0,2 T</strong> horizontal. Si la barra parte del reposo y su masa es <strong>0,01 kg</strong>, ¿cuál será su velocidad terminal si el circuito tiene una resistencia total de <strong>2 Ω</strong>? (Usa equilibrio: peso = fuerza magnética, con <span class="formula">F = I L B</span> e <span class="formula">I = ℰ/R</span>).
+            </div>
+            <div class="espacio"></div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- BLOQUE V – ESPIRAS GIRATORIAS Y TRANSFORMADORES   -->
+    <!-- ================================================== -->
+    <div class="bloque">
+        <h3>BLOQUE V · ESPIRAS GIRATORIAS Y TRANSFORMADORES</h3>
+        <p class="subtitulo">Ejercicios 26 al 30 — Uso de <span class="formula">ℰ = N B A ω senθ</span> y <span class="formula">Vₚ/Vₛ = Nₚ/Nₛ</span></p>
+
+        <!-- Ej 26 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">26</span> <strong>Básico.</strong> Una espira de área <strong>0,01 m²</strong> gira con <strong>ω = 20 rad/s</strong> en un campo <strong>B = 0,5 T</strong>. Calcula la FEM máxima inducida (<span class="formula">ℰ<sub>max</sub> = N B A ω</span>).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 27 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">27</span> <strong>Básico.</strong> Una bobina de <strong>100 espiras</strong>, área <strong>0,005 m²</strong>, gira a <strong>30 rad/s</strong> en un campo <strong>B = 0,2 T</strong>. Calcula la FEM máxima y la FEM cuando <strong>θ = 45°</strong> (ángulo entre normal y <strong>B</strong>).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 28 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">28</span> <strong>Intermedio.</strong> Un generador simple tiene una bobina de <strong>200 espiras</strong>, área <strong>0,02 m²</strong> y gira en un campo de <strong>0,15 T</strong> a <strong>50 rad/s</strong>. Calcula: <br>
+                a) La FEM máxima. <br>
+                b) La frecuencia de la corriente alterna generada (usa <span class="formula">f = ω/(2π)</span>).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 29 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">29</span> <strong>Intermedio–avanzado.</strong> Un transformador ideal tiene <strong>1000 espiras</strong> en el primario y <strong>50 espiras</strong> en el secundario. Si el primario se conecta a <strong>120 V</strong> (eficaz), ¿cuál es el voltaje en el secundario? Si la corriente en el primario es <strong>0,5 A</strong>, ¿cuánto vale la corriente en el secundario? (Usa <span class="formula">Vₚ Iₚ = Vₛ Iₛ</span>).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 30 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">30</span> <strong>Avanzado (síntesis).</strong> Una bobina de <strong>500 espiras</strong> y área <strong>0,03 m²</strong> gira en un campo <strong>B = 0,4 T</strong> con frecuencia <strong>60 Hz</strong>. La bobina está conectada a una resistencia de <strong>10 Ω</strong>. Calcula: <br>
+                a) La FEM máxima generada. <br>
+                b) La corriente máxima (usando <span class="formula">I<sub>max</sub> = ℰ<sub>max</sub> / R</span>). <br>
+                c) Si se duplica el número de espiras, ¿qué ocurre con la FEM máxima?
+            </div>
+            <div class="espacio"></div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- TABLA DE FÓRMULAS                                 -->
+    <!-- ================================================== -->
+    <div style="margin-top: 45px; border-top: 3px double #222; padding-top: 20px;">
+        <h3 style="font-size: 20px; margin-bottom: 12px;">📐 TABLA DE FÓRMULAS ÚTILES — LEY DE FARADAY–LENZ</h3>
+        <table class="tabla-fórmulas">
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Concepto</th>
+                    <th style="width: 50%;">Fórmula</th>
+                    <th style="width: 20%;">Notas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Flujo magnético</td><td><strong>Φ = B A cos θ</strong></td><td>θ entre <strong>B</strong> y la normal</td></tr>
+                <tr><td>FEM inducida (Ley de Faraday)</td><td><strong>ℰ = –N ΔΦ / Δt</strong></td><td>El signo lo da Lenz</td></tr>
+                <tr><td>FEM en barra móvil</td><td><strong>ℰ = B L v senθ</strong></td><td>θ entre <strong>L</strong> y <strong>v</strong></td></tr>
+                <tr><td>FEM en espira giratoria</td><td><strong>ℰ = N B A ω senθ</strong></td><td>θ = ωt</td></tr>
+                <tr><td>FEM máxima (espira giratoria)</td><td><strong>ℰ<sub>max</sub> = N B A ω</strong></td><td>—</td></tr>
+                <tr><td>Transformador ideal</td><td><strong>Vₚ / Vₛ = Nₚ / Nₛ</strong></td><td>Misma potencia: Vₚ Iₚ = Vₛ Iₛ</td></tr>
+                <tr><td>Ley de Lenz</td><td>La corriente inducida se opone a la variación de flujo</td><td>Cualitativa</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- RESPUESTAS                                        -->
+    <!-- ================================================== -->
+    <div style="margin-top: 35px; border-top: 3px double #222; padding-top: 20px;">
+        <h3 style="font-size: 20px; margin-bottom: 12px;">✅ RESPUESTAS NUMÉRICAS CLAVE (para verificación)</h3>
+        <p style="font-size: 14px; color: #555; margin-bottom: 10px;">
+            <em>Nota:</em> Usa esta tabla solo para comprobar tus resultados. Los sentidos de corriente se describen cualitativamente.
+        </p>
+        <table class="tabla-respuestas">
+            <thead>
+                <tr><th style="width: 8%;">N°</th><th style="width: 92%;">Respuesta</th></tr>
+            </thead>
+            <tbody>
+                <tr><td class="num">1</td><td>Φ = 0,0126 Wb</td></tr>
+                <tr><td class="num">2</td><td>Φ = 0,03 Wb</td></tr>
+                <tr><td class="num">3</td><td>Φ = 0,0156 Wb</td></tr>
+                <tr><td class="num">4</td><td>ΔΦ = –0,00471 Wb (o 0,00471 Wb en módulo)</td></tr>
+                <tr><td class="num">5</td><td>Por espira: ΔΦ = 0,008 Wb; total: ΔΦ<sub>total</sub> = 1,6 Wb</td></tr>
+                <tr><td class="num">6</td><td>Φ(t) = 0,006 cos(10t) Wb; en t = 0,05 s → Φ ≈ 0,00526 Wb</td></tr>
+                <tr><td class="num">7</td><td>ℰ = 2 V</td></tr>
+                <tr><td class="num">8</td><td>ℰ = 7,5 V</td></tr>
+                <tr><td class="num">9</td><td>ℰ = 2 V</td></tr>
+                <tr><td class="num">10</td><td>ℰ = 0,06 V</td></tr>
+                <tr><td class="num">11</td><td>ℰ ≈ 0,06 V</td></tr>
+                <tr><td class="num">12</td><td>ℰ = 60 V</td></tr>
+                <tr><td class="num">13</td><td>ℰ = –0,02 V (constante, independiente de <em>t</em>)</td></tr>
+                <tr><td class="num">14</td><td>a) ℰ = 0,151 V; b) I = 0,0302 A</td></tr>
+                <tr><td class="num">15</td><td>ℰ = 0,2 V</td></tr>
+                <tr><td class="num">16</td><td>Antihorario (visto desde el imán), pues se opone al acercamiento</td></tr>
+                <tr><td class="num">17</td><td>Horario (visto desde arriba), para generar un campo entrante que se oponga al aumento</td></tr>
+                <tr><td class="num">18</td><td>Sentido antihorario (para oponerse al aumento de flujo saliente)</td></tr>
+                <tr><td class="num">19</td><td>Al entrar: deflexión en un sentido; al salir: deflexión opuesta</td></tr>
+                <tr><td class="num">20</td><td>Corriente en sentido que genera campo que refuerza el que disminuye</td></tr>
+                <tr><td class="num">21</td><td>ℰ = 0,6 V</td></tr>
+                <tr><td class="num">22</td><td>ℰ = 1,2 V</td></tr>
+                <tr><td class="num">23</td><td>a) ℰ = 0,42 V; b) I = 0,105 A</td></tr>
+                <tr><td class="num">24</td><td>ℰ = 0,636 V (usando L<sub>ef</sub> = L sen45°)</td></tr>
+                <tr><td class="num">25</td><td>v<sub>t</sub> ≈ 6,25 m/s</td></tr>
+                <tr><td class="num">26</td><td>ℰ<sub>max</sub> = 0,1 V</td></tr>
+                <tr><td class="num">27</td><td>ℰ<sub>max</sub> = 3 V; ℰ(45°) ≈ 2,12 V</td></tr>
+                <tr><td class="num">28</td><td>a) ℰ<sub>max</sub> = 30 V; b) f ≈ 7,96 Hz</td></tr>
+                <tr><td class="num">29</td><td>Vₛ = 6 V; Iₛ = 10 A</td></tr>
+                <tr><td class="num">30</td><td>a) ℰ<sub>max</sub> ≈ 2262 V (con ω = 2π·60); b) I<sub>max</sub> ≈ 226,2 A; c) se duplica</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size: 13px; color: #666; margin-top: 10px;">
+            ⚠️ Valores aproximados. Revisa siempre las operaciones con tus alumnos. Los sentidos de corriente se describen cualitativamente.
+        </p>
+    </div>
+
+    <!-- Pie -->
+    <div style="margin-top: 35px; text-align: center; font-size: 14px; color: #555; border-top: 1px solid #ccc; padding-top: 18px;">
+        Repartido elaborado para 3° de Bachillerato · Nivel Medio Superior · Ley de Faraday–Lenz
+    </div>
+
+</div>
+
+</body>
+</html>

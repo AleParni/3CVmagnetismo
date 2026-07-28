@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repartido de Electromagnetismo - 3° CT CVH</title>
+    <style>
+        /* === ESTILOS PARA IMPRESIÓN Y PANTALLA === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background: #f5f5f5;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .repartido {
+            max-width: 1100px;
+            width: 100%;
+            background: white;
+            padding: 40px 45px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+
+        /* Encabezado */
+        .header {
+            text-align: center;
+            border-bottom: 3px double #222;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .header h2 {
+            font-size: 18px;
+            font-weight: normal;
+            margin-top: 5px;
+            color: #333;
+        }
+
+        .header .datos {
+            margin-top: 10px;
+            font-size: 15px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header .datos span {
+            background: #eee;
+            padding: 3px 12px;
+            border-radius: 20px;
+        }
+
+        /* Instrucciones */
+        .instrucciones {
+            background: #f9f9f9;
+            border-left: 5px solid #222;
+            padding: 12px 18px;
+            margin-bottom: 30px;
+            font-size: 15px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .instrucciones strong {
+            font-weight: bold;
+        }
+
+        /* Bloques */
+        .bloque {
+            margin-top: 35px;
+            page-break-inside: avoid;
+        }
+
+        .bloque h3 {
+            background: #222;
+            color: white;
+            padding: 8px 18px;
+            font-size: 19px;
+            border-radius: 30px 30px 30px 0;
+            margin-bottom: 20px;
+            display: inline-block;
+            letter-spacing: 0.5px;
+        }
+
+        .bloque .subtitulo {
+            font-weight: bold;
+            font-size: 16px;
+            margin: 5px 0 15px 0;
+            color: #444;
+            border-bottom: 1px dashed #aaa;
+            padding-bottom: 5px;
+        }
+
+        /* Ejercicio */
+        .ejercicio {
+            margin-bottom: 28px;
+            padding-bottom: 12px;
+            border-bottom: 1px dotted #ccc;
+            page-break-inside: avoid;
+        }
+
+        .ejercicio .enunciado {
+            font-size: 15.5px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        .ejercicio .enunciado strong {
+            font-weight: bold;
+            color: #000;
+        }
+
+        .ejercicio .tag {
+            display: inline-block;
+            background: #e0e0e0;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 0 10px;
+            border-radius: 12px;
+            margin-right: 6px;
+            color: #222;
+        }
+
+        .ejercicio .espacio {
+            margin-top: 12px;
+            min-height: 60px;
+            border-bottom: 1px dashed #bbb;
+            background: #fafafa;
+            border-radius: 4px;
+            padding: 8px;
+        }
+
+        .ejercicio .espacio::before {
+            content: "✎ Resolución:";
+            font-size: 13px;
+            color: #777;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        /* Fórmulas destacadas */
+        .formula {
+            background: #f0f4f8;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            display: inline-block;
+            margin: 3px 0;
+            border: 1px solid #d0d7dd;
+        }
+
+        .formula-block {
+            background: #f0f4f8;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            margin: 6px 0;
+            border: 1px solid #d0d7dd;
+            text-align: center;
+        }
+
+        /* Tablas */
+        .tabla-fórmulas, .tabla-respuestas {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0;
+            font-size: 14px;
+        }
+
+        .tabla-fórmulas th, .tabla-fórmulas td,
+        .tabla-respuestas th, .tabla-respuestas td {
+            border: 1px solid #333;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .tabla-fórmulas th {
+            background: #222;
+            color: white;
+        }
+
+        .tabla-respuestas th {
+            background: #444;
+            color: white;
+        }
+
+        .tabla-respuestas td {
+            font-size: 13px;
+        }
+
+        .tabla-respuestas .num {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Para impresión */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+            .repartido {
+                box-shadow: none;
+                padding: 30px 35px;
+                border-radius: 0;
+            }
+            .ejercicio {
+                page-break-inside: avoid;
+            }
+            .header .datos span {
+                background: #ddd;
+            }
+            .instrucciones {
+                background: #f3f3f3;
+                border-left-color: #000;
+            }
+            .bloque h3 {
+                background: #000;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .tabla-fórmulas th, .tabla-respuestas th {
+                background: #000 !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .ejercicio .espacio {
+                min-height: 80px;
+                background: #f9f9f9;
+                border-bottom: 1px dashed #888;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .repartido {
+                padding: 20px 15px;
+            }
+            .header h1 {
+                font-size: 22px;
+            }
+            .header .datos {
+                flex-direction: column;
+                align-items: center;
+            }
+            .bloque h3 {
+                font-size: 17px;
+                padding: 6px 14px;
+            }
+            .ejercicio .enunciado {
+                font-size: 14.5px;
+            }
+            .tabla-fórmulas, .tabla-respuestas {
+                font-size: 12px;
+            }
+            .tabla-fórmulas th, .tabla-fórmulas td,
+            .tabla-respuestas th, .tabla-respuestas td {
+                padding: 5px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="repartido">
+
+    <!-- ============ ENCABEZADO ============ -->
+    <div class="header">
+        <h1>REPARTIDO N° 3 · ELECTROMAGNETISMO</h1>
+        <h2>Fuerza magnética · Conductores · Corrientes paralelas · Solenoides</h2>
+        <div class="datos">
+            <span>📘 3° Bachillerato — Nivel Medio Superior</span>
+            <span>🧲 30 ejercicios · Dificultad progresiva</span>
+            <span>📅 2026</span>
+        </div>
+    </div>
+
+    <!-- ============ INSTRUCCIONES ============ -->
+    <div class="instrucciones">
+        <strong>📌 Instrucciones generales:</strong><br>
+        • Usa <strong>g = 10 m/s²</strong>, <strong>μ₀ = 4π × 10⁻⁷ T·m/A</strong>, <strong>e = 1,6 × 10⁻¹⁹ C</strong>.<br>
+        • Todas las direcciones se obtienen mediante el <strong>producto vectorial</strong> (<strong>F = q v × B</strong> para cargas; <strong>F = I L × B</strong> para conductores).<br>
+        • Para el sentido del campo magnético generado por una corriente, usa la <strong>regla de la mano derecha</strong> (no manual).<br>
+        • Dibuja un sistema de coordenadas (x, y, z) en cada problema. Deja constancia de tu razonamiento.
+    </div>
+
+    <!-- ================================================== -->
+    <!-- BLOQUE I – FUERZA SOBRE CARGA                     -->
+    <!-- ================================================== -->
+    <div class="bloque">
+        <h3>BLOQUE I · FUERZA SOBRE CARGA EN MOVIMIENTO</h3>
+        <p class="subtitulo">Ejercicios 1 al 8 — Uso de <span class="formula">F = q v × B</span></p>
+
+        <!-- Ej 1 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">1</span> <strong>Básico.</strong> Un protón (<em>q</em> = +1,6×10⁻¹⁹ C) se mueve con velocidad <strong>v = (2×10⁶ m/s) î</strong> y entra en una región con <strong>B = (0,5 T) ĵ</strong>. Calcula el vector fuerza magnética usando <span class="formula">F = q v × B</span>.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 2 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">2</span> <strong>Básico.</strong> Un electrón tiene <strong>v = (4×10⁶ m/s) k̂</strong> y <strong>B = (0,3 T) î</strong>. Halla el vector <strong>F</strong> (recuerda que <em>q</em> = –<em>e</em>).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 3 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">3</span> <strong>Intermedio.</strong> Una partícula de carga <strong>+2 μC</strong> viaja con <strong>v = (500 m/s) î</strong> y siente <strong>B = (0,2 T) ĵ</strong>. Calcula <strong>F</strong> en newtons.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 4 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">4</span> <strong>Intermedio.</strong> ¿Con qué rapidez debe moverse un electrón perpendicularmente a un campo de <strong>0,8 T</strong> para que la magnitud de la fuerza magnética sea igual a su peso? (Masa del electrón = 9,1×10⁻³¹ kg). Usa solo módulos.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 5 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">5</span> <strong>Intermedio.</strong> Un protón describe una circunferencia de radio <strong>0,1 m</strong> dentro de un campo <strong>B = 0,4 T</strong>. Sabiendo que <span class="formula">r = m v / (q B)</span> (para <strong>v ⟂ B</strong>), calcula su rapidez.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 6 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">6</span> <strong>Intermedio–avanzado.</strong> Un ión de carga <strong>+3e</strong> y masa <strong>6,64×10⁻²⁷ kg</strong> entra con <strong>v</strong> que forma <strong>30°</strong> con <strong>B</strong> (ambos en el plano <em>xy</em>). El módulo de <em>v</em> es 1,2×10⁵ m/s y <em>B</em> = 0,6 T. Calcula:<br>
+                a) El módulo de la fuerza magnética.<br>
+                b) El radio de la trayectoria helicoidal (usa solo la componente de <em>v</em> perpendicular a <em>B</em>).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 7 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">7</span> <strong>Avanzado.</strong> Un electrón entra en una región con <strong>B = (0,2 T) k̂</strong>. Su velocidad es <strong>v = (5×10⁶ m/s)(cos60° î + sen60° k̂)</strong>.<br>
+                Encuentra el <strong>paso de la hélice</strong> (distancia que avanza paralelamente a <strong>B</strong> en un periodo). Usa <span class="formula">T = 2π m / (e B)</span> y <span class="formula">v<sub>∥</sub> = v cos60°</span>.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 8 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">8</span> <strong>Avanzado.</strong> En un selector de velocidades, <strong>E</strong> y <strong>B</strong> son perpendiculares. Si <strong>B = (0,1 T) ĵ</strong> y <strong>E = (2×10⁴ N/C) k̂</strong>, ¿qué velocidad (vector) debe tener una carga <em>q</em> > 0 para que la fuerza neta sea cero? (Usa <span class="formula">F = q (E + v × B) = 0</span>).
+            </div>
+            <div class="espacio"></div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- BLOQUE II – FUERZA SOBRE CONDUCTOR                -->
+    <!-- ================================================== -->
+    <div class="bloque">
+        <h3>BLOQUE II · FUERZA SOBRE CONDUCTOR RECTILÍNEO</h3>
+        <p class="subtitulo">Ejercicios 9 al 15 — Uso de <span class="formula">F = I L × B</span></p>
+
+        <!-- Ej 9 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">9</span> <strong>Básico.</strong> Un alambre recto de <strong>0,5 m</strong> lleva corriente <em>I</em> = 3 A en dirección <strong>+î</strong>. Está dentro de <strong>B = (0,4 T) ĵ</strong>. Calcula el vector <strong>F</strong> usando <span class="formula">F = I L × B</span>.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 10 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">10</span> <strong>Básico.</strong> Un conductor de <strong>1,2 m</strong> con <em>I</em> = 5 A forma <strong>60°</strong> con <strong>B</strong> (el ángulo está en el plano <em>xy</em>, con <strong>L</strong> sobre el eje <em>x</em> y <strong>B</strong> formando 60° con <em>x</em>). Si <em>B</em> = 0,2 T, calcula la magnitud de la fuerza.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 11 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">11</span> <strong>Intermedio.</strong> Una barra de <strong>80 cm</strong> y <em>I</em> = 2 A está inmersa en <em>B</em> = 0,5 T. Si la fuerza máxima posible mide <strong>0,8 N</strong>, ¿qué ángulo debe haber entre el vector <strong>L</strong> y <strong>B</strong>?
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 12 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">12</span> <strong>Intermedio.</strong> Un riel horizontal de <strong>0,6 m</strong> lleva <em>I</em> = 4 A en dirección <strong>+î</strong>. El campo <strong>B = (0,3 T) k̂</strong> es vertical. La barra tiene masa <strong>0,02 kg</strong>. Calcula la aceleración inicial (supón que la fuerza magnética es horizontal y no hay rozamiento).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 13 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">13</span> <strong>Intermedio–avanzado.</strong> Un conductor recto de masa <strong>0,5 kg</strong> y longitud <strong>1 m</strong> cuelga de dos hilos verticales. Cuando pasa corriente, se desvía <strong>15°</strong> de la vertical. El campo <strong>B</strong> es horizontal y perpendicular al conductor. Si <em>B</em> = 0,4 T, calcula la corriente <em>I</em>. (Sugerencia: diagrama de fuerzas; usa <span class="formula">tan 15° = F<sub>m</sub> / (m g)</span>).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 14 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">14</span> <strong>Avanzado.</strong> Un alambre doblado en forma de U tiene dos lados verticales de <strong>0,3 m</strong> y una base horizontal de <strong>0,4 m</strong>. Está en <strong>B = (0,2 T)(–k̂)</strong> (entrante al plano). Por él circulan <strong>2,5 A</strong> en sentido horario (visto desde arriba). Calcula la <strong>fuerza neta</strong> sobre todo el alambre (suma vectorial de <strong>F</strong> para cada segmento rectilíneo).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 15 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">15</span> <strong>Avanzado.</strong> Una espira rectangular de lados <strong>0,2 m</strong> y <strong>0,3 m</strong> tiene <em>I</em> = 5 A. Está girando en un campo <em>B</em> = 0,15 T. Calcula el <strong>torque máximo</strong> (<span class="formula">τ = I A B senθ</span>, con <em>N</em> = 1) y el torque cuando el ángulo entre la normal a la espira y <strong>B</strong> es <strong>30°</strong>.
+            </div>
+            <div class="espacio"></div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- BLOQUE III – FUERZAS ENTRE CORRIENTES PARALELAS   -->
+    <!-- ================================================== -->
+    <div class="bloque">
+        <h3>BLOQUE III · FUERZAS ENTRE CORRIENTES PARALELAS</h3>
+        <p class="subtitulo">Ejercicios 16 al 22 — Uso de <span class="formula">F/L = μ₀ I₁ I₂ / (2π d)</span></p>
+
+        <!-- Ej 16 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">16</span> <strong>Básico.</strong> Dos conductores rectilíneos, muy largos y paralelos, están separados <strong>0,05 m</strong>. Llevan corrientes <em>I</em>₁ = 2 A e <em>I</em>₂ = 3 A en el <strong>mismo sentido</strong>. Calcula la fuerza por unidad de longitud (módulo) e indica si es atractiva o repulsiva (mismo sentido → atracción; opuesto → repulsión).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 17 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">17</span> <strong>Básico.</strong> Repite el ejercicio 16 pero con corrientes en <strong>sentidos opuestos</strong>. Da el módulo y el tipo de interacción.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 18 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">18</span> <strong>Intermedio.</strong> Dos alambres paralelos separados <strong>10 cm</strong> se repelen con una fuerza por metro de <strong>8×10⁻⁶ N/m</strong>. Si uno lleva <em>I</em>₁ = 4 A, ¿cuánto vale la corriente <em>I</em>₂?
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 19 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">19</span> <strong>Intermedio.</strong> Tres conductores paralelos en el mismo plano, separados <strong>0,1 m</strong> entre cada par. Las corrientes (todas perpendiculares al plano) son: <em>I</em>₁ = 5 A (saliendo del plano), <em>I</em>₂ = 3 A (entrando al plano), <em>I</em>₃ = 4 A (saliendo del plano). Calcula la <strong>fuerza neta por metro</strong> sobre el conductor central (módulo y dirección: ¿hacia <em>I</em>₁ o hacia <em>I</em>₃?).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 20 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">20</span> <strong>Intermedio–avanzado.</strong> Dos alambres verticales muy largos cuelgan separados <strong>0,08 m</strong>. Cada uno tiene masa por unidad de longitud <strong>0,01 kg/m</strong>. Por ambos circula la misma corriente <em>I</em> en sentidos opuestos. Se repelen y cada alambre se desvía <strong>6°</strong> de la vertical.<br>
+                Usa equilibrio: <span class="formula">tan θ = (F/L) / (m g / L)</span>, con <span class="formula">F/L = μ₀ I² / (2π d)</span>, donde <em>d</em> es la separación final (aproxima <em>d</em> ≈ 0,08 m para θ pequeño). Calcula <em>I</em>.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 21 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">21</span> <strong>Avanzado.</strong> Dos corrientes paralelas de <strong>10 A</strong> y <strong>15 A</strong> en el mismo sentido están separadas <strong>0,2 m</strong>. Calcula el <strong>campo magnético total</strong> en el punto medio entre ellas (módulo y sentido, usando la regla del sacacorchos para cada corriente).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 22 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">22</span> <strong>Avanzado.</strong> Para el sistema del ejercicio 21, encuentra la <strong>distancia <em>x</em></strong> medida desde el conductor de 10 A (sobre la línea que los une) donde el campo magnético total se anula. (Considera que entre ambos conductores los campos tienen sentidos opuestos).
+            </div>
+            <div class="espacio"></div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- BLOQUE IV – SOLENOIDE                             -->
+    <!-- ================================================== -->
+    <div class="bloque">
+        <h3>BLOQUE IV · CAMPO MAGNÉTICO GENERADO POR UN SOLENOIDE</h3>
+        <p class="subtitulo">Ejercicios 23 al 30 — Uso de <span class="formula">B = μ₀ n I</span> y <span class="formula">Φ = B A cosθ</span></p>
+
+        <!-- Ej 23 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">23</span> <strong>Básico.</strong> Un solenoide de <strong>500 espiras</strong> y <strong>0,4 m</strong> de largo lleva <em>I</em> = 2 A. Calcula el campo <strong>B</strong> en su interior (usa <span class="formula">B = μ₀ n I</span>, con <span class="formula">n = N/L</span>).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 24 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">24</span> <strong>Básico.</strong> ¿Cuántas espiras por metro debe tener un solenoide para que con <em>I</em> = 1,5 A genere <strong>B = 0,03 T</strong> en su interior?
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 25 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">25</span> <strong>Intermedio.</strong> Un solenoide tiene <em>N</em> = 800 espiras, <em>L</em> = 25 cm y radio 3 cm. Con <em>I</em> = 4 A:<br>
+                a) Calcula <strong>B</strong> en el centro.<br>
+                b) Si se duplica la corriente y se reduce la longitud a la mitad (manteniendo <em>N</em>), ¿cuál es el nuevo <strong>B</strong>?
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 26 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">26</span> <strong>Intermedio.</strong> Se tienen dos solenoides coaxiales (mismo eje). El primero: <em>L</em>₁ = 0,3 m, <em>N</em>₁ = 600, <em>I</em>₁ = 1,5 A. El segundo: <em>L</em>₂ = 0,2 m, <em>N</em>₂ = 400, <em>I</em>₂ = 2 A. Sus campos tienen la <strong>misma dirección</strong>. Calcula el campo total en la zona central común.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 27 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">27</span> <strong>Intermedio–avanzado.</strong> Un solenoide con <em>n</em> = 1000 espiras/m produce <strong>B = 0,05 T</strong> en aire. Si se introduce un núcleo de hierro con permeabilidad relativa <strong>μ<sub>r</sub> = 500</strong> (sin cambiar la corriente), ¿cuál será el nuevo campo magnético? Usa <span class="formula">B = μ₀ μ<sub>r</sub> n I</span>.
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 28 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">28</span> <strong>Avanzado.</strong> Un solenoide de <em>L</em> = 0,6 m y <em>N</em> = 1200 espiras tiene una corriente que varía linealmente con el tiempo: <span class="formula">I(t) = (2,5 A/s)·t</span> (desde <em>t</em> = 0 hasta <em>t</em> = 2 s).<br>
+                Escribe la expresión <strong>B(t)</strong> y calcula el <strong>valor promedio</strong> de <em>B</em> en los primeros 2 segundos (promedio aritmético entre <em>t</em> = 0 y <em>t</em> = 2).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 29 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">29</span> <strong>Avanzado.</strong> Un solenoide muy largo tiene <em>n</em> = 2000 esp/m y <em>I</em> = 3 A. En su interior se coloca una espira circular de radio <strong>0,02 m</strong> cuyo plano es <strong>paralelo al eje del solenoide</strong>. Calcula el flujo magnético <span class="formula">Φ = B A cosθ</span> a través de la espira (define claramente el ángulo <em>θ</em> entre <strong>B</strong> y la normal a la espira).
+            </div>
+            <div class="espacio"></div>
+        </div>
+
+        <!-- Ej 30 -->
+        <div class="ejercicio">
+            <div class="enunciado">
+                <span class="tag">30</span> <strong>Desafío (síntesis).</strong> Un solenoide de <em>N</em> = 1000, <em>L</em> = 0,5 m, <em>I</em> = 2 A. En su interior se mueve un electrón con velocidad <strong>v = (10⁶ m/s) î</strong> y el campo del solenoide es <strong>B = B k̂</strong>.<br>
+                a) Calcula <strong>B</strong> dentro del solenoide.<br>
+                b) Calcula la fuerza magnética <strong>F</strong> sobre el electrón (usa <span class="formula">F = q v × B</span>).<br>
+                c) Describe cualitativamente la trayectoria (sin usar manos, solo con vectores: ¿aceleración perpendicular a <strong>v</strong> y a <strong>B</strong>?).
+            </div>
+            <div class="espacio"></div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- TABLA DE FÓRMULAS (siempre visible)               -->
+    <!-- ================================================== -->
+    <div style="margin-top: 45px; border-top: 3px double #222; padding-top: 20px;">
+        <h3 style="font-size: 20px; margin-bottom: 12px;">📐 TABLA DE FÓRMULAS ÚTILES</h3>
+        <table class="tabla-fórmulas">
+            <thead>
+                <tr>
+                    <th style="width: 35%;">Concepto</th>
+                    <th style="width: 45%;">Fórmula</th>
+                    <th style="width: 20%;">Notas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Fuerza sobre carga</td><td><strong>F = q v × B</strong></td><td>Producto vectorial</td></tr>
+                <tr><td>Módulo (carga)</td><td>F = |q| v B sen θ</td><td>θ = ángulo entre v y B</td></tr>
+                <tr><td>Radio (v ⟂ B)</td><td>r = m v / (q B)</td><td>—</td></tr>
+                <tr><td>Paso de hélice</td><td>T = 2π m / (q B) &nbsp;·&nbsp; p = v<sub>∥</sub> T</td><td>v<sub>∥</sub> = v cos θ</td></tr>
+                <tr><td>Fuerza sobre conductor</td><td><strong>F = I L × B</strong></td><td>L en dirección de I</td></tr>
+                <tr><td>Módulo (conductor)</td><td>F = I L B sen θ</td><td>—</td></tr>
+                <tr><td>Torque en espira</td><td>τ = N I A B sen θ</td><td>θ entre normal y B</td></tr>
+                <tr><td>Fuerza entre corrientes (por metro)</td><td>F/L = μ₀ I₁ I₂ / (2π d)</td><td>Atracción si misma dirección</td></tr>
+                <tr><td>Campo en solenoide</td><td>B = μ₀ n I &nbsp; (n = N/L)</td><td>—</td></tr>
+                <tr><td>Con núcleo</td><td>B = μ₀ μ<sub>r</sub> n I</td><td>μ<sub>r</sub> = permeabilidad relativa</td></tr>
+                <tr><td>Flujo magnético</td><td>Φ = B A cos θ</td><td>θ entre B y normal</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- RESPUESTAS (opcional, se pueden recortar)          -->
+    <!-- ================================================== -->
+    <div style="margin-top: 35px; border-top: 3px double #222; padding-top: 20px;">
+        <h3 style="font-size: 20px; margin-bottom: 12px;">✅ RESPUESTAS NUMÉRICAS CLAVE (para verificación)</h3>
+        <p style="font-size: 14px; color: #555; margin-bottom: 10px;">
+            <em>Nota:</em> Las respuestas están expresadas con vectores o módulos según corresponda. Usa este bloque solo para comprobar tus resultados.
+        </p>
+        <table class="tabla-respuestas">
+            <thead>
+                <tr><th style="width: 8%;">N°</th><th style="width: 92%;">Respuesta</th></tr>
+            </thead>
+            <tbody>
+                <tr><td class="num">1</td><td><strong>F</strong> = (0 ; 0 ; –1,6×10⁻¹³) N</td></tr>
+                <tr><td class="num">2</td><td><strong>F</strong> = (0 ; –1,92×10⁻¹³ ; 0) N</td></tr>
+                <tr><td class="num">3</td><td><strong>F</strong> = (0 ; 0 ; –2,0×10⁻⁴) N</td></tr>
+                <tr><td class="num">4</td><td>v ≈ 7,1×10⁻¹¹ m/s</td></tr>
+                <tr><td class="num">5</td><td>v ≈ 3,8×10⁷ m/s</td></tr>
+                <tr><td class="num">6</td><td>a) F ≈ 1,73×10⁻¹³ N &nbsp;·&nbsp; b) r ≈ 2,1×10⁻³ m</td></tr>
+                <tr><td class="num">7</td><td>T ≈ 1,78×10⁻¹⁰ s &nbsp;·&nbsp; p ≈ 1,78×10⁻³ m</td></tr>
+                <tr><td class="num">8</td><td><strong>v</strong> = (2×10⁵ m/s) î</td></tr>
+                <tr><td class="num">9</td><td><strong>F</strong> = (0 ; 0 ; 0,6) N</td></tr>
+                <tr><td class="num">10</td><td>F = 1,04 N</td></tr>
+                <tr><td class="num">11</td><td>θ = 90°</td></tr>
+                <tr><td class="num">12</td><td>a = 36 m/s² (horizontal)</td></tr>
+                <tr><td class="num">13</td><td>I ≈ 3,28 A</td></tr>
+                <tr><td class="num">14</td><td>Fuerza neta = 0,2 N en dirección +î (los lados verticales se cancelan)</td></tr>
+                <tr><td class="num">15</td><td>τ<sub>máx</sub> = 9,0×10⁻³ N·m &nbsp;·&nbsp; τ<sub>30°</sub> = 4,5×10⁻³ N·m</td></tr>
+                <tr><td class="num">16</td><td>2,4×10⁻⁵ N/m (atracción)</td></tr>
+                <tr><td class="num">17</td><td>2,4×10⁻⁵ N/m (repulsión)</td></tr>
+                <tr><td class="num">18</td><td>I₂ = 10 A</td></tr>
+                <tr><td class="num">19</td><td>1,4×10⁻⁵ N/m hacia I₁</td></tr>
+                <tr><td class="num">20</td><td>I ≈ 2,8 A</td></tr>
+                <tr><td class="num">21</td><td>B<sub>total</sub> ≈ 1,0×10⁻⁵ T (sentido opuesto al que produce la corriente de 15 A)</td></tr>
+                <tr><td class="num">22</td><td>x = 0,12 m desde el conductor de 10 A (hacia el otro)</td></tr>
+                <tr><td class="num">23</td><td>B ≈ 3,14×10⁻³ T</td></tr>
+                <tr><td class="num">24</td><td>n ≈ 15915 esp/m</td></tr>
+                <tr><td class="num">25</td><td>a) 0,0161 T &nbsp;·&nbsp; b) 0,0644 T (4 veces mayor)</td></tr>
+                <tr><td class="num">26</td><td>B<sub>1</sub> = 0,00377 T &nbsp;·&nbsp; B<sub>2</sub> = 0,00503 T &nbsp;·&nbsp; total ≈ 0,0088 T</td></tr>
+                <tr><td class="num">27</td><td>B = 25 T (teórico, sin saturación)</td></tr>
+                <tr><td class="num">28</td><td>B(t) = (4π×10⁻³)·t (T) &nbsp;·&nbsp; promedio = 6,28×10⁻³ T</td></tr>
+                <tr><td class="num">29</td><td>Plano paralelo al eje → normal ⟂ B → θ = 90° → Φ = 0 (si es exactamente paralelo)</td></tr>
+                <tr><td class="num">30</td><td>a) B = (0 ; 0 ; 5,03×10⁻³) T &nbsp;·&nbsp; b) F = (0 ; –8,05×10⁻¹⁶ ; 0) N &nbsp;·&nbsp; c) Trayectoria circular uniforme en el plano xy</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size: 13px; color: #666; margin-top: 10px;">
+            ⚠️ Los valores son aproximados. Revisa siempre las operaciones.
+        </p>
+    </div>
+
+    <!-- Pie de página -->
+    <div style="margin-top: 35px; text-align: center; font-size: 14px; color: #555; border-top: 1px solid #ccc; padding-top: 18px;">
+        Repartido elaborado para 3° de Bachillerato · Nivel Medio Superior · Todos los derechos de uso educativo reservados
+        https://creativecommons.org/licenses/by-nc-nd/4.0/.
+    </div>
+
+</div>
+
+</body>
+</html>
